@@ -1,4 +1,4 @@
-﻿namespace DateBlazor.Shared.Models
+﻿namespace BlazorDate.Shared.Models
 {
     public class PersonPreference
     {

@@ -1,4 +1,4 @@
-﻿using DateBlazor.Shared.Models;
+﻿using BlazorDate.Shared.Models;
 
 namespace BlazorDate.Server.Data
 {

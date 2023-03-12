@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DateBlazor.Shared.Models
+namespace BlazorDate.Shared.Models
 {
     public class Availability
     {

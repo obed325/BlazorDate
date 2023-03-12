@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorDate.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BlazorDate.Shared.Models
         public int Id { get; set; }
         [ForeignKey("PersonId")]
         public Person Person { get; set; } //persons settings
-        public List<Availability> Availability { get; set; }
+        public List<Availability>? Availabilities { get; set; }
         public int AgeMin { get; set; }
         public int AgeMax { get; set;}
     }

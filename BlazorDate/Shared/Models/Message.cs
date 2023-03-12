@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DateBlazor.Shared.Models
+namespace BlazorDate.Shared.Models
 {
     public class Message
     {

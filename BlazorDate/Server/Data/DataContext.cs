@@ -20,6 +20,8 @@ namespace BlazorDate.Server.Data
         public DbSet<Preference> Preferences { get; set; }
         public DbSet<Profile> profiles { get; set; }
         public DbSet<Seriousness> Seriousnesses { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserSetting> UserSettings { get; set; }
 
     }
 }

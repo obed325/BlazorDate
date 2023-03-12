@@ -21,7 +21,7 @@ namespace BlazorDate.Shared.Models
         public DateTime LastActive { get; set; }
         public DateTime Updated { get; set; } = DateTime.Now;
         public Profile? Profile { get; set; }
-        public Picture? Picture { get; set; }
+        //public Picture? Picture { get; set; }
 
         [ForeignKey("MatchLikedPerson")]
         public ICollection<Person>? LikedPersons { get; set; }

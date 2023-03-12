@@ -13,6 +13,7 @@ namespace BlazorDate.Shared.Models
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+        public bool IsProfilePicture { get; set; }
         public bool IsPublic { get; set; } = true;
         public bool IsExplecit { get; set; } = false;
         public DateTime Created { get; set; } = DateTime.Now;

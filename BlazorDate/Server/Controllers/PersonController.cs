@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlazorDate.Server.Data;
+using BlazorDate.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorDate.Server.Controllers
@@ -7,47 +8,27 @@ namespace BlazorDate.Server.Controllers
     [ApiController]
     public class PersonController : Controller
     {
+        private readonly DataContext _context;
+        public PersonController(DataContext dataContext)
+        {
+            this._context = dataContext;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
-
-        public async Task<IActionResult> GetPerson()
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetPerson()
         {
-            return Ok(Peoples);
+            var persons = await _context.Persons.ToListAsync();
+            var response = new ServiceResponse<List<Person>>()
+            {
+                Data = persons
+            };
+            return Ok(persons);
         }
 
-        private static List<Person> Peoples = new List<Person>
-        {
-            new Person
-            {
-                PersonId = 1,
-                Name = "Börje",
-                Nick = "Rattens riddare",
-                Description = "Vem är fullast?",
-            },
-            new Person
-            {
-                PersonId = 2,
-                Name = "Cara",
-                Nick = "Carmen",
-                Description = "Lugn person med takt och ton, måttfull och balanserad."
-            },
-            new Person
-            {
-                PersonId = 3,
-                Name = "My",
-                Nick = "Lilla My",
-                Description = "Liten och dristig."
-            },
-            new Person
-            {
-                PersonId = 4,
-                Name = "Mumriken",
-                Nick = "Snusmumriken",
-                Description = "Bär oftast hatt."
-            }
-
-        };
+     
     }
 }

@@ -6,8 +6,57 @@ namespace BlazorDate.Server.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender
+                {
+                    Id = 1,
+                    Name = "Female",
+                    Description = "Så kallad cis-kvinna, som tänder främst på män."
+                },
+                new Gender
+                {
+                    Id = 2,
+                    Name = "Man",
+                    Description = "Identifirar sig främst som sitt biologiska kön och attraheras av sk mottsatta könet. Även så kallat Cis-man."
+                }
+            );
+
+            modelBuilder.Entity<Person>().HasData(
+                new Person
+                {
+                    PersonId = 1,
+                    Name = "Börje",
+                    Nick = "Rattens riddare",
+                    Description = "Vem är fullast?",
+                },
+                new Person
+                {
+                    PersonId = 2,
+                    Name = "Cara",
+                    Nick = "Carmen",
+                    Description = "Lugn person med takt och ton, måttfull och balanserad."
+                },
+                new Person
+                {
+                    PersonId = 3,
+                    Name = "My",
+                    Nick = "Lilla My",
+                    Description = "Liten och dristig."
+                },
+                new Person
+                {
+                    PersonId = 4,
+                    Name = "Mumriken",
+                    Nick = "Snusmumriken",
+                    Description = "Bär oftast hatt."
+                }
+            );
+        }
+
         public DbSet<Address> Address { get; set; }
         public DbSet<Availability> Availabilities { get; set; }
         public DbSet<Chat> Chats { get; set; }

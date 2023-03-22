@@ -1,5 +1,6 @@
 global using BlazorDate.Shared.Models;
 global using BlazorDate.Server.Services.PersonService;
+global using BlazorDate.Server.Services.GenderService;
 global using Microsoft.EntityFrameworkCore;
 global using BlazorDate.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -19,7 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPersonService, PersonService>();
-//builder.Services.AddScoped(IGenderService, GenderService>();
+builder.Services.AddScoped<IGenderService, GenderService>();
 
 var app = builder.Build();
 

@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorDate.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230312202034_initial")]
-    partial class initial
+    [Migration("20230322151258_gender")]
+    partial class gender
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -115,9 +115,29 @@ namespace BlazorDate.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Så kallad cis-kvinna, som tänder främst på män.",
+                            Name = "Female",
+                            Url = "fem"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Identifirar sig främst som sitt biologiska kön och attraheras av sk mottsatta könet. Även så kallat Cis-man.",
+                            Name = "Man",
+                            Url = "men"
+                        });
                 });
 
             modelBuilder.Entity("BlazorDate.Shared.Models.Match", b =>
@@ -215,7 +235,7 @@ namespace BlazorDate.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GenderId")
+                    b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastActive")
@@ -229,6 +249,10 @@ namespace BlazorDate.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfileText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Stats")
                         .HasColumnType("int");
 
@@ -239,7 +263,65 @@ namespace BlazorDate.Server.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.ToTable("Persons");
+                    b.ToTable("People");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Vem är fullast?",
+                            GenderId = 2,
+                            LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Börje",
+                            Nick = "Rattens riddare",
+                            ProfileText = "",
+                            Stats = 0,
+                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7554)
+                        },
+                        new
+                        {
+                            PersonId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Lugn person med takt och ton, måttfull och balanserad.",
+                            GenderId = 1,
+                            LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Cara",
+                            Nick = "Carmen",
+                            ProfileText = "",
+                            Stats = 0,
+                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7612)
+                        },
+                        new
+                        {
+                            PersonId = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Liten och dristig.",
+                            GenderId = 1,
+                            LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "My",
+                            Nick = "Lilla My",
+                            ProfileText = "",
+                            Stats = 0,
+                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7615)
+                        },
+                        new
+                        {
+                            PersonId = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bär oftast hatt.",
+                            GenderId = 2,
+                            LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Mumriken",
+                            Nick = "Snusmumriken",
+                            ProfileText = "",
+                            Stats = 0,
+                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7618)
+                        });
                 });
 
             modelBuilder.Entity("BlazorDate.Shared.Models.PersonPreference", b =>
@@ -259,9 +341,6 @@ namespace BlazorDate.Server.Migrations
                     b.Property<int?>("PreferenceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProfileId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SeriousnessId")
                         .HasColumnType("int");
 
@@ -270,8 +349,6 @@ namespace BlazorDate.Server.Migrations
                     b.HasIndex("PersonId");
 
                     b.HasIndex("PreferenceId");
-
-                    b.HasIndex("ProfileId");
 
                     b.HasIndex("SeriousnessId");
 
@@ -309,9 +386,6 @@ namespace BlazorDate.Server.Migrations
                     b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProfileId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -319,8 +393,6 @@ namespace BlazorDate.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Pictures");
                 });
@@ -344,29 +416,6 @@ namespace BlazorDate.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Preferences");
-                });
-
-            modelBuilder.Entity("BlazorDate.Shared.Models.Profile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Person")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProfileText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Person")
-                        .IsUnique();
-
-                    b.ToTable("profiles");
                 });
 
             modelBuilder.Entity("BlazorDate.Shared.Models.Seriousness", b =>
@@ -496,7 +545,9 @@ namespace BlazorDate.Server.Migrations
                 {
                     b.HasOne("BlazorDate.Shared.Models.Gender", "Gender")
                         .WithMany()
-                        .HasForeignKey("GenderId");
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Gender");
                 });
@@ -504,16 +555,12 @@ namespace BlazorDate.Server.Migrations
             modelBuilder.Entity("BlazorDate.Shared.Models.PersonPreference", b =>
                 {
                     b.HasOne("BlazorDate.Shared.Models.Person", "Person")
-                        .WithMany()
+                        .WithMany("Preferences")
                         .HasForeignKey("PersonId");
 
                     b.HasOne("BlazorDate.Shared.Models.Preference", "Preference")
                         .WithMany()
                         .HasForeignKey("PreferenceId");
-
-                    b.HasOne("BlazorDate.Shared.Models.Profile", null)
-                        .WithMany("Preferences")
-                        .HasForeignKey("ProfileId");
 
                     b.HasOne("BlazorDate.Shared.Models.Seriousness", "Seriousness")
                         .WithMany()
@@ -529,25 +576,10 @@ namespace BlazorDate.Server.Migrations
             modelBuilder.Entity("BlazorDate.Shared.Models.Picture", b =>
                 {
                     b.HasOne("BlazorDate.Shared.Models.Person", "Person")
-                        .WithMany()
+                        .WithMany("Pictures")
                         .HasForeignKey("PersonId");
 
-                    b.HasOne("BlazorDate.Shared.Models.Profile", null)
-                        .WithMany("Pictures")
-                        .HasForeignKey("ProfileId");
-
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("BlazorDate.Shared.Models.Profile", b =>
-                {
-                    b.HasOne("BlazorDate.Shared.Models.Person", "ProfilePerson")
-                        .WithOne("Profile")
-                        .HasForeignKey("BlazorDate.Shared.Models.Profile", "Person")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProfilePerson");
                 });
 
             modelBuilder.Entity("BlazorDate.Shared.Models.UserSetting", b =>
@@ -567,11 +599,6 @@ namespace BlazorDate.Server.Migrations
                 });
 
             modelBuilder.Entity("BlazorDate.Shared.Models.Person", b =>
-                {
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("BlazorDate.Shared.Models.Profile", b =>
                 {
                     b.Navigation("Pictures");
 

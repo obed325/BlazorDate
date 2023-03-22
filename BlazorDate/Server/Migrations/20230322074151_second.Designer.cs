@@ -4,6 +4,7 @@ using BlazorDate.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorDate.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230322074151_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,10 +115,6 @@ namespace BlazorDate.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
@@ -125,15 +124,13 @@ namespace BlazorDate.Server.Migrations
                         {
                             Id = 1,
                             Description = "Så kallad cis-kvinna, som tänder främst på män.",
-                            Name = "Female",
-                            Url = "fem"
+                            Name = "Female"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Identifirar sig främst som sitt biologiska kön och attraheras av sk mottsatta könet. Även så kallat Cis-man.",
-                            Name = "Man",
-                            Url = "men"
+                            Name = "Man"
                         });
                 });
 
@@ -232,7 +229,7 @@ namespace BlazorDate.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GenderId")
+                    b.Property<int?>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastActive")
@@ -269,13 +266,12 @@ namespace BlazorDate.Server.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Vem är fullast?",
-                            GenderId = 2,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Börje",
                             Nick = "Rattens riddare",
                             ProfileText = "",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7554)
+                            Updated = new DateTime(2023, 3, 22, 8, 41, 51, 519, DateTimeKind.Local).AddTicks(5284)
                         },
                         new
                         {
@@ -283,13 +279,12 @@ namespace BlazorDate.Server.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lugn person med takt och ton, måttfull och balanserad.",
-                            GenderId = 1,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cara",
                             Nick = "Carmen",
                             ProfileText = "",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7612)
+                            Updated = new DateTime(2023, 3, 22, 8, 41, 51, 519, DateTimeKind.Local).AddTicks(5355)
                         },
                         new
                         {
@@ -297,13 +292,12 @@ namespace BlazorDate.Server.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Liten och dristig.",
-                            GenderId = 1,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "My",
                             Nick = "Lilla My",
                             ProfileText = "",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7615)
+                            Updated = new DateTime(2023, 3, 22, 8, 41, 51, 519, DateTimeKind.Local).AddTicks(5358)
                         },
                         new
                         {
@@ -311,13 +305,12 @@ namespace BlazorDate.Server.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bär oftast hatt.",
-                            GenderId = 2,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Mumriken",
                             Nick = "Snusmumriken",
                             ProfileText = "",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 22, 16, 12, 58, 663, DateTimeKind.Local).AddTicks(7618)
+                            Updated = new DateTime(2023, 3, 22, 8, 41, 51, 519, DateTimeKind.Local).AddTicks(5361)
                         });
                 });
 
@@ -542,9 +535,7 @@ namespace BlazorDate.Server.Migrations
                 {
                     b.HasOne("BlazorDate.Shared.Models.Gender", "Gender")
                         .WithMany()
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenderId");
 
                     b.Navigation("Gender");
                 });

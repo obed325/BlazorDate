@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BlazorDate.Server.Migrations
 {
     /// <inheritdoc />
@@ -82,7 +84,7 @@ namespace BlazorDate.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "People",
                 columns: table => new
                 {
                     PersonId = table.Column<int>(type: "int", nullable: false)
@@ -95,13 +97,14 @@ namespace BlazorDate.Server.Migrations
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastActive = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProfileText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stats = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.PersonId);
+                    table.PrimaryKey("PK_People", x => x.PersonId);
                     table.ForeignKey(
-                        name: "FK_Persons_Genders_GenderId",
+                        name: "FK_People_Genders_GenderId",
                         column: x => x.GenderId,
                         principalTable: "Genders",
                         principalColumn: "Id");
@@ -151,14 +154,14 @@ namespace BlazorDate.Server.Migrations
                         principalTable: "Chats",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Matches_Persons_MatchLikedPersonPersonId",
+                        name: "FK_Matches_People_MatchLikedPersonPersonId",
                         column: x => x.MatchLikedPersonPersonId,
-                        principalTable: "Persons",
+                        principalTable: "People",
                         principalColumn: "PersonId");
                     table.ForeignKey(
-                        name: "FK_Matches_Persons_MatchLikeePersonId",
+                        name: "FK_Matches_People_MatchLikeePersonId",
                         column: x => x.MatchLikeePersonId,
-                        principalTable: "Persons",
+                        principalTable: "People",
                         principalColumn: "PersonId");
                 });
 
@@ -187,51 +190,10 @@ namespace BlazorDate.Server.Migrations
                         principalTable: "Chats",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Messages_Persons_SenderPersonId",
+                        name: "FK_Messages_People_SenderPersonId",
                         column: x => x.SenderPersonId,
-                        principalTable: "Persons",
+                        principalTable: "People",
                         principalColumn: "PersonId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "profiles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Person = table.Column<int>(type: "int", nullable: false),
-                    ProfileText = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_profiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_profiles_Persons_Person",
-                        column: x => x.Person,
-                        principalTable: "Persons",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserSettings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    AgeMin = table.Column<int>(type: "int", nullable: false),
-                    AgeMax = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserSettings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserSettings_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,16 +205,15 @@ namespace BlazorDate.Server.Migrations
                     PersonId = table.Column<int>(type: "int", nullable: true),
                     PreferenceId = table.Column<int>(type: "int", nullable: true),
                     SeriousnessId = table.Column<int>(type: "int", nullable: true),
-                    IsVisible = table.Column<bool>(type: "bit", nullable: false),
-                    ProfileId = table.Column<int>(type: "int", nullable: true)
+                    IsVisible = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonPreferences", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonPreferences_Persons_PersonId",
+                        name: "FK_PersonPreferences_People_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Persons",
+                        principalTable: "People",
                         principalColumn: "PersonId");
                     table.ForeignKey(
                         name: "FK_PersonPreferences_Preferences_PreferenceId",
@@ -263,11 +224,6 @@ namespace BlazorDate.Server.Migrations
                         name: "FK_PersonPreferences_Seriousnesses_SeriousnessId",
                         column: x => x.SeriousnessId,
                         principalTable: "Seriousnesses",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PersonPreferences_profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "profiles",
                         principalColumn: "Id");
                 });
 
@@ -284,22 +240,37 @@ namespace BlazorDate.Server.Migrations
                     IsProfilePicture = table.Column<bool>(type: "bit", nullable: false),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false),
                     IsExplecit = table.Column<bool>(type: "bit", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProfileId = table.Column<int>(type: "int", nullable: true)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pictures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_Persons_PersonId",
+                        name: "FK_Pictures_People_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Persons",
+                        principalTable: "People",
                         principalColumn: "PersonId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    AgeMin = table.Column<int>(type: "int", nullable: false),
+                    AgeMax = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "profiles",
-                        principalColumn: "Id");
+                        name: "FK_UserSettings_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -319,6 +290,26 @@ namespace BlazorDate.Server.Migrations
                         column: x => x.UserSettingId,
                         principalTable: "UserSettings",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genders",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Så kallad cis-kvinna, som tänder främst på män.", "Female" },
+                    { 2, "Identifirar sig främst som sitt biologiska kön och attraheras av sk mottsatta könet. Även så kallat Cis-man.", "Man" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "People",
+                columns: new[] { "PersonId", "Created", "DateOfBirth", "Description", "GenderId", "LastActive", "Name", "Nick", "ProfileText", "Stats", "Updated" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Vem är fullast?", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Börje", "Rattens riddare", "", 0, new DateTime(2023, 3, 21, 13, 12, 19, 714, DateTimeKind.Local).AddTicks(25) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lugn person med takt och ton, måttfull och balanserad.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cara", "Carmen", "", 0, new DateTime(2023, 3, 21, 13, 12, 19, 714, DateTimeKind.Local).AddTicks(99) },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Liten och dristig.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "My", "Lilla My", "", 0, new DateTime(2023, 3, 21, 13, 12, 19, 714, DateTimeKind.Local).AddTicks(102) },
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bär oftast hatt.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mumriken", "Snusmumriken", "", 0, new DateTime(2023, 3, 21, 13, 12, 19, 714, DateTimeKind.Local).AddTicks(154) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -358,6 +349,11 @@ namespace BlazorDate.Server.Migrations
                 column: "SenderPersonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_People_GenderId",
+                table: "People",
+                column: "GenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersonPreferences_PersonId",
                 table: "PersonPreferences",
                 column: "PersonId");
@@ -368,35 +364,14 @@ namespace BlazorDate.Server.Migrations
                 column: "PreferenceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonPreferences_ProfileId",
-                table: "PersonPreferences",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PersonPreferences_SeriousnessId",
                 table: "PersonPreferences",
                 column: "SeriousnessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persons_GenderId",
-                table: "Persons",
-                column: "GenderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pictures_PersonId",
                 table: "Pictures",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pictures_ProfileId",
-                table: "Pictures",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_profiles_Person",
-                table: "profiles",
-                column: "Person",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSettings_PersonId",
@@ -441,10 +416,7 @@ namespace BlazorDate.Server.Migrations
                 name: "Seriousnesses");
 
             migrationBuilder.DropTable(
-                name: "profiles");
-
-            migrationBuilder.DropTable(
-                name: "Persons");
+                name: "People");
 
             migrationBuilder.DropTable(
                 name: "Genders");

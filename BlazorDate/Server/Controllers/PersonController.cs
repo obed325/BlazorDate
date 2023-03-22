@@ -1,4 +1,5 @@
 ﻿using BlazorDate.Server.Data;
+using BlazorDate.Server.Services.PersonService;
 using BlazorDate.Shared;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,11 @@ namespace BlazorDate.Server.Controllers
     [ApiController]
     public class PersonController : Controller
     {
-        private readonly DataContext _context;
-        public PersonController(DataContext dataContext)
+        private readonly IPersonService _personService;
+
+        public PersonController(IPersonService personService)
         {
-            this._context = dataContext;
+            this._personService = personService;
         }
 
         public IActionResult Index()
@@ -19,16 +21,19 @@ namespace BlazorDate.Server.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetPerson()
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetPeopleAsync()
         {
-            var persons = await _context.Persons.ToListAsync();
-            var response = new ServiceResponse<List<Person>>()
-            {
-                Data = persons
-            };
-            return Ok(persons);
+            var result = await _personService.GetPeopleAsync();
+            return Ok(result);
         }
 
-     
+        [HttpGet("{personId}")]
+        //[Route("{id}")]
+        public async Task<ActionResult<ServiceResponse<Person>>> GetProduct(int personId)
+        {
+            var result = await _personService.GetPersonAsync(personId);
+            return Ok(result);
+        }
+
     }
 }

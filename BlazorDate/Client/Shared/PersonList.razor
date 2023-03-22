@@ -1,33 +1,35 @@
-﻿@inject HttpClient Client
+﻿@inject IPersonService PersonService
 
-<ul class="list-unstyled">
-    @foreach(var person in Peoples)
-    {
-        <li class="oi-media-pause my-3">
-            <div class="media-img-wrapper mr-2">
-                <a href="#">
-                    @*<img class="media-img" src="@person.Name" />*@
-                </a>
-            </div>
-            <div class="media-body">
-                <a href="#">
-                    <h4 class="mb-0">@person.Nick</h4>
-                </a>
-                <h5>@person.Name</h5>
-                <p>@person.Description</p>
-            </div>
-        </li>
-    }
-</ul>
+@if (PersonService.People == null || PersonService.People.Count == 0)
+{
+    <span>Loading people...</span>
+}
+else
+{
+    <ul class="list-unstyled"> 
+        @foreach (var person in PersonService.People)
+        {
+            <li class="oi-media-pause my-3">
+                <div class="media-img-wrapper mr-2">
+                    <a href="/person/person.Id">
+                        <img class="media-img" src="@person.Name" />
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="#">
+                        <h4 class="mb-0">@person.Nick</h4>
+                    </a>
+                    <h5>@person.Name</h5>
+                    <p>@person.Description</p>
+                </div>
+            </li>
+        }
+    </ul>
+}
 
 @code {
-    private static List<Person> Peoples = new List<Person>();
-
     protected override async Task OnInitializedAsync()
     {
-        var result = 
-            await Client.GetFromJsonAsync<ServiceResponse<List<Person>>>("api/Person");
-        if (result != null && result.Data != null)
-            Peoples = result.Data;
+        await PersonService.GetPeopleAsync();
     }
 }

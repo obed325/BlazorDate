@@ -1,0 +1,53 @@
+﻿@page "/person/{id:int}"
+@inject IPersonService PersonService
+
+@if(person == null)
+{
+    <span>@message</span>
+}
+else
+{
+    <div class="media">
+        <div class="media-img-wrapper mr-2">
+            <img class="media-img" src="picture.Url" />
+        </div>
+        <div>
+            <img class="media-img" alt="@person.Nick" />
+        </div>
+        <div>
+            @person.Description
+        </div>
+        <div>
+            @*TODO perhaps preferences here*@
+        </div>
+    </div>
+}
+
+@code {
+    private Person? person = null;
+    private Picture? picture = null;
+    private string message = string.Empty;
+
+    [Parameter]
+    public int Id {get;set;}
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //Todo fetch picture
+        //var profilePicture =
+
+        //await lacking
+        //person = PersonService.People.Find(p => p.PersonId == Id);
+        message = "Loading person...";
+
+        var result = await PersonService.GetPerson(Id);
+        if(!result.Success)
+        {
+            message = result.Message;
+        }
+        else
+        {
+            person = result.Data;
+        }
+    }
+}

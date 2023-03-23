@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\GenderService\" />
     <Folder Include="Services\PersonPreferenceService\" />
     <Folder Include="Services\PreferenceService\" />
     <Folder Include="Services\PictureService\" />

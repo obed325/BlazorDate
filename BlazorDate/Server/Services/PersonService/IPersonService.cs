@@ -7,5 +7,7 @@ namespace BlazorDate.Server.Services.PersonService
         Task<ServiceResponse<List<Person>>> GetPeopleAsync();
 
         Task<ServiceResponse<Person>> GetPersonAsync(int personId);
+
+        Task<ServiceResponse<List<Person>>> GetPeopleByGender(string genderId);
     }
 }

@@ -35,5 +35,11 @@ namespace BlazorDate.Server.Controllers
             return Ok(result);
         }
 
+        [HttpGet("gender/{genderUrl}")]
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetPeopleByGender(string genderUrl)
+        {
+            var result = await _personService.GetPeopleByGender(genderUrl);
+            return Ok(result);
+        }
     }
 }

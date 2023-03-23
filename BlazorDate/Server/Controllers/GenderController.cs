@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorDate.Server.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class GenderController : Controller
     {
         private readonly IGenderService _genderService;

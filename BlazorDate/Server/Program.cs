@@ -17,12 +17,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IGenderService, GenderService>();
 
 var app = builder.Build();
+
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -36,6 +38,7 @@ else
     app.UseHsts();
 }
 
+app.UseSwagger();
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
@@ -46,6 +49,8 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
+
+
 app.MapFallbackToFile("index.html");
 
 app.Run();

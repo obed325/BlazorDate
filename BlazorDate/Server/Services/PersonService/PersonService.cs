@@ -22,6 +22,18 @@ namespace BlazorDate.Server.Services.PersonService
             return response;
         }
 
+        public async Task<ServiceResponse<List<Person>>> GetPeopleByGender(string genderUrl)
+        {
+            var response = new ServiceResponse<List<Person>>
+            {
+                Data = await _context.People
+                    .Where(p=>p.Gender.Url.ToLower().Equals(genderUrl.ToLower()))
+                    .ToListAsync()
+            };
+
+            return response;
+        }
+
         public async Task<ServiceResponse<Person>> GetPersonAsync(int personId)
         {
             var response = new ServiceResponse<Person>();

@@ -1,7 +1,18 @@
 ﻿@page "/"
+@page "/{genderUrl}"
+@inject IPersonService PersonService
 
-<PageTitle>People</PageTitle>
+<PageTitle>BlazorDate</PageTitle>
 
-<h1>BlazorDate</h1>
 
 <PersonList />
+
+@code{
+    [Parameter]
+    public string? GenderUrl { get; set; } = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await PersonService.GetPeople(GenderUrl);
+    }
+}

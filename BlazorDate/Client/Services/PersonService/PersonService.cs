@@ -23,7 +23,7 @@ namespace BlazorDate.Client.Services.PersonService
             return result;
         }
 
-        public async Task GetPeople(string genderUrl = null)
+        public async Task GetPeople(string? genderUrl = null)
         {
             var result = genderUrl == null ? 
                 await _httpClient.GetFromJsonAsync<ServiceResponse<List<Person>>>("api/person") :

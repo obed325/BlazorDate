@@ -4,7 +4,7 @@
     {
         event Action PeopleChanged;
         List<Person> People { get; set; }
-        Task GetPeople(string genderUrl = null);
+        Task GetPeople(string? genderUrl = null);
         Task<ServiceResponse<Person>> GetPerson(int personId);
     }
 }

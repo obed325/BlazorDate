@@ -34,5 +34,24 @@ namespace BlazorDate.Client.Services.PersonService
             PeopleChanged.Invoke();
         }
 
+        public async Task<Person> CreatePerson(Person person)
+        {
+            var result = await _httpClient.PatchAsJsonAsync("api/person", person);
+            var newPerson = (await result.Content
+                .ReadFromJsonAsync<ServiceResponse<Person>>()).Data;
+            return newPerson;
+        }
+
+        public async Task<Person> UpdatePerson(Person person)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/person", person);
+            return (await result.Content.ReadFromJsonAsync<ServiceResponse<Person>>()).Data;
+
+        }
+
+        public async Task DeletePerson(Person person)
+        {
+            var result = await _httpClient.DeleteAsync($"api/product/{person.PersonId}");
+        }
     }
 }

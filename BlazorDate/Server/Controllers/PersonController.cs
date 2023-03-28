@@ -20,6 +20,28 @@ namespace BlazorDate.Server.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<Person>>> CreatePerson(Person person)
+        {
+            var result = await _personService.CreatePerson(person);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<Person>>> UpdatePerson(Person person)
+        {
+            var result = await _personService.UpdatePerson(person);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<bool>>> DeletePerson(int id)
+        {
+            var result = await _personService.DeletePerson(id);
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<Person>>>> GetPeopleAsync()
         {

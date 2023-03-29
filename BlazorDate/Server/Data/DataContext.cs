@@ -34,7 +34,7 @@ namespace BlazorDate.Server.Data
                     PersonId = 1,
                     Name = "Börje",
                     Nick = "Rattens riddare",
-                    Description = "Vem är fullast?",
+                    ProfileText = "Vem är fullast?",
                     GenderId = 2
                 },
                 new Person
@@ -42,7 +42,7 @@ namespace BlazorDate.Server.Data
                     PersonId = 2,
                     Name = "Cara",
                     Nick = "Carmen",
-                    Description = "Lugn person med takt och ton, måttfull och balanserad.",
+                    ProfileText = "Lugn person med takt och ton, måttfull och balanserad.",
                     GenderId = 1
                 },
                 new Person
@@ -50,7 +50,7 @@ namespace BlazorDate.Server.Data
                     PersonId = 3,
                     Name = "My",
                     Nick = "Lilla My",
-                    Description = "Liten och dristig.",
+                    ProfileText = "Liten och dristig.",
                     GenderId = 1
                 },
                 new Person
@@ -58,7 +58,7 @@ namespace BlazorDate.Server.Data
                     PersonId = 4,
                     Name = "Mumriken",
                     Nick = "Snusmumriken",
-                    Description = "Bär oftast hatt.",
+                    ProfileText = "Bär oftast hatt.",
                     GenderId = 2
                 }
             );

@@ -93,7 +93,6 @@ namespace BlazorDate.Server.Services.PersonService
             dbPerson.Gender = person.Gender;
             dbPerson.Nick = person.Nick;
             dbPerson.DateOfBirth = person.DateOfBirth;
-            dbPerson.Description = person.Description;
             dbPerson.Preferences = person.Preferences;
             dbPerson.ProfileText = person.ProfileText;
             dbPerson.Pictures = person.Pictures;

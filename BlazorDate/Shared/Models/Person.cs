@@ -14,16 +14,21 @@ namespace BlazorDate.Shared.Models
         //public Role Role { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Nick { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        public string ProfileText { get; set; } = string.Empty;
+        //public string Description { get; set; } = string.Empty;
         public Gender? Gender { get; set; }
         public int GenderId { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime Created { get; set; }
+        [NotMapped]
+        public bool Editing { get; set; } = false;
+        [NotMapped]
+        public bool IsNew { get; set; } = false;
         public DateTime LastActive { get; set; }
         public DateTime Updated { get; set; } = DateTime.Now;
         public List<Picture>? Pictures { get; set; }
         public virtual List<PersonPreference> Preferences { get; set; }
-        public string ProfileText { get; set; } = string.Empty;
+        
 
         [ForeignKey("MatchLikedPerson")]
         public ICollection<Person>? LikedPersons { get; set; }

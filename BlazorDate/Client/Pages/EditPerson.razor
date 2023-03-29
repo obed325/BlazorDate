@@ -1,5 +1,5 @@
-﻿@page "/person"
-@page "/person/{id:int}"
+﻿@page "/editperson"
+@page "/editperson/{id:int}"
 @inject IPersonService PersonService
 @inject IGenderService GenderService
 @inject NavigationManager NavigationManager
@@ -102,9 +102,9 @@ else
 
     async void AddOrUpdatePerson()
     {
-        if (person.GenderId == null || person.GenderId== 0)
+        if (gender.Id == null || gender.Id == 0)
         {
-            await JSRuntime.InvokeVoidAsync("alert", "You need to choose a category before save!");
+            await JSRuntime.InvokeVoidAsync("alert", "You need to choose a gender before save!");
         }
         else
         {
@@ -117,7 +117,7 @@ else
             {
                 person.IsNew = false;
                 person = await PersonService.UpdatePerson(person);
-                NavigationManager.NavigateTo($"admin/product/{person.PersonId}", true);
+                NavigationManager.NavigateTo($"person/{person.PersonId}", true);
             }
         }
     }

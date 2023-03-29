@@ -36,7 +36,7 @@ namespace BlazorDate.Client.Services.PersonService
 
         public async Task<Person> CreatePerson(Person person)
         {
-            var result = await _httpClient.PatchAsJsonAsync("api/person", person);
+            var result = await _httpClient.PostAsJsonAsync("api/person", person);
             var newPerson = (await result.Content
                 .ReadFromJsonAsync<ServiceResponse<Person>>()).Data;
             return newPerson;

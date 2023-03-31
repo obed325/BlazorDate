@@ -28,16 +28,16 @@ else
         </div>
         <div class="mb-0">
             <label for="nick">Nick</label>
-            <InputText id="name" @bind-Value="person.Nick" class="form-control"></InputText>
+            <InputText id="nick" @bind-Value="person.Nick" class="form-control"></InputText>
         </div>
         <div class="mb-0">
             <label for="profiletext">Profile Text</label>
-            <InputTextArea id="profileText" @bind-Value="person.ProfileText" class="form-control"></InputTextArea>
+            <InputTextArea id="profiletext" @bind-Value="person.ProfileText" class="form-control"></InputTextArea>
         </div>
-        
+
         <div class="mb-3">
             <label for="gender">Gender</label>
-            <InputSelect id="gender" @bind-Value=gender.Id class="form-control form-select">
+            <InputSelect id="gender" @bind-Value=person.GenderId class="form-control form-select">
                 @foreach (var gender in GenderService.Genders)
                 {
                     <option value="@gender.Id">@gender.Name</option>
@@ -66,7 +66,7 @@ else
     public int Id { get; set; }
 
     Person person = new Person();
-    Gender gender = new Gender();
+    //Gender gender = new Gender();
     bool loading = true;
     string btnText = "";
     string msg = "Loading...";
@@ -102,7 +102,7 @@ else
 
     async void AddOrUpdatePerson()
     {
-        if (gender.Id == null || gender.Id == 0)
+        if (person.GenderId == null || person.GenderId == 0)
         {
             await JSRuntime.InvokeVoidAsync("alert", "You need to choose a gender before save!");
         }

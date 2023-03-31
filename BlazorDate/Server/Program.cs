@@ -1,3 +1,4 @@
+global using BlazorDate.Shared;
 global using BlazorDate.Shared.Models;
 global using BlazorDate.Server.Services.PersonService;
 global using BlazorDate.Server.Services.GenderService;

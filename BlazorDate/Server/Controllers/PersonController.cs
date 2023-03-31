@@ -1,13 +1,15 @@
 ﻿using BlazorDate.Server.Data;
 using BlazorDate.Server.Services.PersonService;
 using BlazorDate.Shared;
+using BlazorDate.Shared.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorDate.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : Controller
+    public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
 
@@ -16,10 +18,10 @@ namespace BlazorDate.Server.Controllers
             this._personService = personService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<Person>>> CreatePerson(Person person)

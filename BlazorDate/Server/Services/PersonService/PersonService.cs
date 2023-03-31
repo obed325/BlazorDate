@@ -16,6 +16,9 @@ namespace BlazorDate.Server.Services.PersonService
 
         public async Task<ServiceResponse<Person>> CreatePerson(Person person)
         {
+            person.Created = DateTime.Now;
+            person.Updated= DateTime.Now;
+            person.IsNew = false;
                 _context.People.Add(person);
             await _context.SaveChangesAsync();
             return new ServiceResponse<Person> { Data = person };

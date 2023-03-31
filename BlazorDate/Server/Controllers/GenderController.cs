@@ -5,7 +5,7 @@ namespace BlazorDate.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenderController : Controller
+    public class GenderController : ControllerBase
     {
         private readonly IGenderService _genderService;
         public GenderController(IGenderService genderService)

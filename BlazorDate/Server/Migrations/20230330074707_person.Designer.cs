@@ -4,6 +4,7 @@ using BlazorDate.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorDate.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230330074707_person")]
+    partial class person
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,7 +228,7 @@ namespace BlazorDate.Server.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GenderId")
@@ -263,49 +266,53 @@ namespace BlazorDate.Server.Migrations
                         {
                             PersonId = 1,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenderId = 2,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Börje",
                             Nick = "Rattens riddare",
                             ProfileText = "Vem är fullast?",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 31, 11, 59, 0, 767, DateTimeKind.Local).AddTicks(6008)
+                            Updated = new DateTime(2023, 3, 30, 9, 47, 6, 858, DateTimeKind.Local).AddTicks(4027)
                         },
                         new
                         {
                             PersonId = 2,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenderId = 1,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cara",
                             Nick = "Carmen",
                             ProfileText = "Lugn person med takt och ton, måttfull och balanserad.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 31, 11, 59, 0, 767, DateTimeKind.Local).AddTicks(6067)
+                            Updated = new DateTime(2023, 3, 30, 9, 47, 6, 858, DateTimeKind.Local).AddTicks(4094)
                         },
                         new
                         {
                             PersonId = 3,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenderId = 1,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "My",
                             Nick = "Lilla My",
                             ProfileText = "Liten och dristig.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 31, 11, 59, 0, 767, DateTimeKind.Local).AddTicks(6070)
+                            Updated = new DateTime(2023, 3, 30, 9, 47, 6, 858, DateTimeKind.Local).AddTicks(4097)
                         },
                         new
                         {
                             PersonId = 4,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenderId = 2,
                             LastActive = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Mumriken",
                             Nick = "Snusmumriken",
                             ProfileText = "Bär oftast hatt.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 3, 31, 11, 59, 0, 767, DateTimeKind.Local).AddTicks(6073)
+                            Updated = new DateTime(2023, 3, 30, 9, 47, 6, 858, DateTimeKind.Local).AddTicks(4100)
                         });
                 });
 

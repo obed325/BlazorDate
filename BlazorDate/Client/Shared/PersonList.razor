@@ -10,14 +10,21 @@ else
     <ul class="list-unstyled"> 
         @foreach (var person in PersonService.People)
         {
-            <li class="oi-media-pause my-3">
+            <li class="media my-3">
                 <div class="media-img-wrapper mr-2">
-                    <a href="/person/person.Id">
-                        <img class="media-img" src="@person.Name" />
+                    <a href="/person/@person.PersonId">
+                        @if(person.Pictures.Count > 0)
+                        {
+                            <img class="media-img" src="@person.Pictures[0].Data" alt="@person.Nick" />
+                        }
+                        else
+                        {
+                            <img class="media-img" src="nopicture.jfif" />
+                        }
                     </a>
                 </div>
                 <div class="media-body">
-                    <a href="#">
+                    <a href="/person/@person.PersonId">
                         <h4 class="mb-0">@person.Nick</h4>
                     </a>
                     <h5>@person.Name</h5>

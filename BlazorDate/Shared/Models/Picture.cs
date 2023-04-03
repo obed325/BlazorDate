@@ -10,7 +10,7 @@ namespace BlazorDate.Shared.Models
     {
         public int Id { get; set; }
         public Person? Person { get; set; }
-        public string Data { get; set; }
+        public string Data { get; set; } = string.Empty;   //image stored in db
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;

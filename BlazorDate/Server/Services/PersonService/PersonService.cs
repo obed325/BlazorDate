@@ -7,19 +7,21 @@ namespace BlazorDate.Server.Services.PersonService
     public class PersonService : IPersonService
     {
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IGenderService _genderService;
-        public PersonService(DataContext context, IGenderService genderService)
+        public PersonService(DataContext context, IHttpContextAccessor httpContextAccessor, IGenderService genderService)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
             _genderService = genderService;
         }
 
         public async Task<ServiceResponse<Person>> CreatePerson(Person person)
         {
             person.Created = DateTime.Now;
-            person.Updated= DateTime.Now;
+            person.Updated = DateTime.Now;
             person.IsNew = false;
-                _context.People.Add(person);
+            _context.People.Add(person);
             await _context.SaveChangesAsync();
             return new ServiceResponse<Person> { Data = person };
         }
@@ -37,7 +39,7 @@ namespace BlazorDate.Server.Services.PersonService
                 };
             }
 
-            //dbPerson.Deleted = true;
+            _context.People.Remove(dbPerson);
             await _context.SaveChangesAsync();
             return new ServiceResponse<bool> { Data = true };
         }
@@ -46,7 +48,11 @@ namespace BlazorDate.Server.Services.PersonService
         {
             var response = new ServiceResponse<List<Person>>
             {
-                Data = await _context.People.Include(pic => pic.Pictures.Where(w => w.IsProfilePicture)).ToListAsync()
+                Data = await _context.People
+                .Include(p=>p.Pictures)
+                .ToListAsync()
+                //.Include(pic => pic.Pictures.Where(w => w.IsProfilePicture))
+                //.ToListAsync()
             };
 
             return response;
@@ -58,6 +64,7 @@ namespace BlazorDate.Server.Services.PersonService
             {
                 Data = await _context.People
                     .Where(p => p.Gender.Url.ToLower().Equals(genderUrl.ToLower()))
+                    .Include(p => p.Pictures)
                     .ToListAsync()
             };
 
@@ -67,7 +74,22 @@ namespace BlazorDate.Server.Services.PersonService
         public async Task<ServiceResponse<Person>> GetPersonAsync(int personId)
         {
             var response = new ServiceResponse<Person>();
-            var person = await _context.People.FindAsync(personId);
+            Person person = null;
+
+
+            //if(_httpContextAccessor.HttpContext.User.IsInRole("Admin"))
+            //{
+            //    person = await _context.People
+            //        .Include(pic => pic.Pictures)
+            //        .FirstOrDefaultAsync(p => p.PersonId == personId);
+            //}
+
+            person = await _context.People
+                .Include(pic => pic.Pictures)
+                .FirstOrDefaultAsync(p => p.PersonId == personId);
+
+
+
             if (person == null)
             {
                 response.Success = false;

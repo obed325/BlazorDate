@@ -23,6 +23,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IGenderService, GenderService>();
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 app.UseSwaggerUI();

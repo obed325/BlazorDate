@@ -26,9 +26,9 @@ namespace BlazorDate.Shared.Models
         public bool IsNew { get; set; } = false;
         public DateTime LastActive { get; set; } = DateTime.MinValue;
         public DateTime Updated { get; set; } = DateTime.Now;
-        public List<Picture>? Pictures { get; set; }
+        public List<Picture>? Pictures { get; set; } = new List<Picture>();
         public virtual List<PersonPreference>? Preferences { get; set; }
-        
+
 
         [ForeignKey("MatchLikedPerson")]
         public ICollection<Person>? LikedPersons { get; set; }

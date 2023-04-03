@@ -51,7 +51,7 @@ namespace BlazorDate.Client.Services.PersonService
 
         public async Task DeletePerson(Person person)
         {
-            var result = await _httpClient.DeleteAsync($"api/product/{person.PersonId}");
+            var result = await _httpClient.DeleteAsync($"api/person/{person.PersonId}");
         }
     }
 }

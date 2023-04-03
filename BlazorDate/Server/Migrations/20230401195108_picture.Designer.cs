@@ -4,6 +4,7 @@ using BlazorDate.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorDate.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230401195108_picture")]
+    partial class picture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,7 +272,7 @@ namespace BlazorDate.Server.Migrations
                             Nick = "Rattens riddare",
                             ProfileText = "Vem är fullast?",
                             Stats = 0,
-                            Updated = new DateTime(2023, 4, 1, 23, 17, 26, 880, DateTimeKind.Local).AddTicks(6541)
+                            Updated = new DateTime(2023, 4, 1, 21, 51, 8, 328, DateTimeKind.Local).AddTicks(6129)
                         },
                         new
                         {
@@ -281,7 +284,7 @@ namespace BlazorDate.Server.Migrations
                             Nick = "Carmen",
                             ProfileText = "Lugn person med takt och ton, måttfull och balanserad.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 4, 1, 23, 17, 26, 880, DateTimeKind.Local).AddTicks(6619)
+                            Updated = new DateTime(2023, 4, 1, 21, 51, 8, 328, DateTimeKind.Local).AddTicks(6202)
                         },
                         new
                         {
@@ -293,7 +296,7 @@ namespace BlazorDate.Server.Migrations
                             Nick = "Lilla My",
                             ProfileText = "Liten och dristig.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 4, 1, 23, 17, 26, 880, DateTimeKind.Local).AddTicks(6622)
+                            Updated = new DateTime(2023, 4, 1, 21, 51, 8, 328, DateTimeKind.Local).AddTicks(6206)
                         },
                         new
                         {
@@ -305,7 +308,7 @@ namespace BlazorDate.Server.Migrations
                             Nick = "Snusmumriken",
                             ProfileText = "Bär oftast hatt.",
                             Stats = 0,
-                            Updated = new DateTime(2023, 4, 1, 23, 17, 26, 880, DateTimeKind.Local).AddTicks(6625)
+                            Updated = new DateTime(2023, 4, 1, 21, 51, 8, 328, DateTimeKind.Local).AddTicks(6209)
                         });
                 });
 

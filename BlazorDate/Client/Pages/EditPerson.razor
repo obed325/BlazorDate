@@ -13,7 +13,7 @@ else
 {
     @if (person.Editing)
     {
-        <h3>Edid "@person.Name"</h3>
+        <h3>Edit "@person.Name"</h3>
     }
     else if (person.IsNew)
     {
@@ -40,10 +40,28 @@ else
             <InputSelect id="gender" @bind-Value=person.GenderId class="form-control form-select">
                 @foreach (var gender in GenderService.Genders)
                 {
-                    <option value="@gender.Id">@gender.Name</option>
-                    <label>@gender.Description</label>
+                    <option value="@gender.Id">@gender.Name. <small>@gender.Description</small></option>
                 }
             </InputSelect>
+        </div>
+
+        <div class="mb-0">
+         @*   @if (!string.IsNullOrEmpty(person.))
+            {
+                <img src="@person.ImageUrl" />
+            }*@
+
+            @if (person.Pictures != null || person.Pictures.Count > 0)
+            {
+                @foreach (var picture in person.Pictures)
+                {
+                    <img src="picture.Data" />
+                }
+            }
+        </div>
+        <div class="mb-0">
+            <label for="pictures">Pictures</label>
+            <InputFile id="pictures" OnChange="OnFileChange" multiple class="form-control"></InputFile>
         </div>
 
         <button type="submit" class="btn btn-primary float-start m-3">@btnText</button>
@@ -128,7 +146,20 @@ else
         if (confirmed)
         {
             await PersonService.DeletePerson(person);
-            NavigationManager.NavigateTo("index");
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+        foreach (var picture in e.GetMultipleFiles(8))
+        {
+            var resizedPicture = await picture.RequestImageFileAsync(format, 200, 200);
+            var buffer = new byte[resizedPicture.Size];
+            await resizedPicture.OpenReadStream().ReadAsync(buffer);
+            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            person.Pictures.Add(new Picture { Data = imageData });
         }
     }
 }

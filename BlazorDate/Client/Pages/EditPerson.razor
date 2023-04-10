@@ -46,16 +46,17 @@ else
         </div>
 
         <div class="mb-0">
-         @*   @if (!string.IsNullOrEmpty(person.))
-            {
-                <img src="@person.ImageUrl" />
-            }*@
+            @*   @if (!string.IsNullOrEmpty(person.))
+        {
+        <img src="@person.ImageUrl" />
+        }*@
 
             @if (person.Pictures != null || person.Pictures.Count > 0)
             {
                 @foreach (var picture in person.Pictures)
                 {
-                    <img src="picture.Data" />
+                    <img src="@picture.Data" />
+                    <button type="button" class="btn btn-sm" @onclick="(() => RemovePicture(picture.Id))">Remove</button>
                 }
             }
         </div>
@@ -160,6 +161,15 @@ else
             await resizedPicture.OpenReadStream().ReadAsync(buffer);
             var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
             person.Pictures.Add(new Picture { Data = imageData });
+        }
+    }
+
+    void RemovePicture(int id)
+    {
+        var picture = person.Pictures.FirstOrDefault(p => p.Id == id);
+        if (picture != null)
+        {
+            person.Pictures.Remove(picture);
         }
     }
 }

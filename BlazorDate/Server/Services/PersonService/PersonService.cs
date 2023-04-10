@@ -49,7 +49,7 @@ namespace BlazorDate.Server.Services.PersonService
             var response = new ServiceResponse<List<Person>>
             {
                 Data = await _context.People
-                .Include(p=>p.Pictures)
+                .Include(p => p.Pictures)
                 .ToListAsync()
                 //.Include(pic => pic.Pictures.Where(w => w.IsProfilePicture))
                 //.ToListAsync()
@@ -105,7 +105,10 @@ namespace BlazorDate.Server.Services.PersonService
 
         public async Task<ServiceResponse<Person>> UpdatePerson(Person person)
         {
-            var dbPerson = await _context.People.FindAsync(person.PersonId);
+            var dbPerson = await _context.People
+                .Include(p => p.Pictures)
+                .FirstOrDefaultAsync(p => p.PersonId == person.PersonId);
+
             if (dbPerson == null)
             {
                 return new ServiceResponse<Person>
@@ -122,6 +125,11 @@ namespace BlazorDate.Server.Services.PersonService
             dbPerson.ProfileText = person.ProfileText;
             dbPerson.Pictures = person.Pictures;
             dbPerson.Updated = DateTime.Now;
+
+            var personPictures = dbPerson.Pictures;
+            _context.Pictures.RemoveRange(personPictures);
+
+            dbPerson.Pictures = person.Pictures;
 
             await _context.SaveChangesAsync();
             return new ServiceResponse<Person> { Data = person };

@@ -53,7 +53,7 @@ namespace BlazorDate.Server.Controllers
 
         [HttpGet("{personId}")]
         //[Route("{id}")]
-        public async Task<ActionResult<ServiceResponse<Person>>> GetProduct(int personId)
+        public async Task<ActionResult<ServiceResponse<Person>>> GetPerson(int personId)
         {
             var result = await _personService.GetPersonAsync(personId);
             return Ok(result);

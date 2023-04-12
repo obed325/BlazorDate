@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Services\PersonPreferenceService\" />
-    <Folder Include="Services\PreferenceService\" />
     <Folder Include="Services\PictureService\" />
   </ItemGroup>
 

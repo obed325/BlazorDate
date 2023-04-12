@@ -1,0 +1,105 @@
+﻿@page "/adminpreferences"
+@inject IPreferenceService PreferenceService
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+<h3>Admin Preferences</h3>
+
+<div class="header">
+    <div class="col">Name</div>
+    <div class="col">Description</div>
+    <div class="col"></div>
+</div>
+
+@foreach (var preference in PreferenceService.Preferences)
+{
+    @if (preference.Editing)
+    {
+        <EditForm Model="editingPreference" OnSubmit="UpdatePreference">
+            <div class="row">
+                <div class="col">
+                    <InputText @bind-Value="editingPreference.Name" class="form-control"></InputText>
+                </div>
+                <div class="col">
+                    <InputText @bind-Value="editingPreference.Description" class="form-control"></InputText>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="oi oi-cloud-upload"></i>
+                    </button>
+                    <button class="btn btn-primary" @onclick="CancelEditing">
+                        <i class="oi oi-circle-x"></i>
+                    </button>
+                </div>
+            </div>
+        </EditForm>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                @preference.Name
+            </div>
+            <div class="col">
+                @preference.Description
+            </div>
+            <div class="col">
+                <button class="btn btn-primary" @onclick="(() => EditPreference(preference))">
+                    <i class="oi oi-pencil"></i>
+                </button>
+                <button class="btn btn-primary" @onclick="(() => DeletePreference(preference.Id))">
+                    <i class="oi oi-trash"></i>
+                </button>
+            </div>
+        </div>
+    }
+}
+<button class="btn btn-primary mt-2" @onclick="CreateNewPreference">
+    <i class="oi oi-plus"></i>  Add new preference
+</button>
+
+@code {
+    Preference editingPreference = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await PreferenceService.GetPreferences();
+        PreferenceService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        PreferenceService.OnChange -= StateHasChanged;
+    }
+
+    private void CreateNewPreference()
+    {
+        editingPreference = PreferenceService.CreateNewPreference();
+    }
+
+    private void EditPreference(Preference preference)
+    {
+        preference.Editing = true;
+        editingPreference = preference;
+    }
+
+    private async Task UpdatePreference()
+    {
+        if (editingPreference.IsNew)
+            await PreferenceService.AddPreference(editingPreference);
+        else
+            await PreferenceService.UpdatePreference(editingPreference);
+        editingPreference = new Preference();
+    }
+
+    private async Task CancelEditing()
+    {
+        editingPreference = new Preference();
+        await PreferenceService.GetPreferences();
+    }
+
+    private async Task DeletePreference(int id)
+    {
+        await PreferenceService.DeletePreference(id);
+    }
+}

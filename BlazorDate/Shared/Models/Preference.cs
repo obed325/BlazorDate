@@ -12,6 +12,8 @@ namespace BlazorDate.Shared.Models
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+
         [NotMapped]
         public bool Editing { get; set; } = false;
         [NotMapped]

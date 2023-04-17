@@ -61,6 +61,7 @@
             }
             dbPreference.Name = preference.Name;
             dbPreference.Description = preference.Description;
+            dbPreference.Category = preference.Category;
 
             await _context.SaveChangesAsync();
 

@@ -17,7 +17,7 @@
             </NavLink>
         </div>
 
-        if(GenderService.Genders != null)
+        @if(GenderService?.Genders != null)
         {
             @foreach (var gender in GenderService.Genders)
             {

@@ -9,7 +9,9 @@ namespace BlazorDate.Client.Services.SeriousnessService
         {
             _httpClient = httpClient;
         }
+
         public List<Seriousness> Seriousnesses { get; set; } = new List<Seriousness>();
+
         public event Action OnChange;
 
         public async Task AddSeriousness(Seriousness seriousness)
@@ -23,7 +25,7 @@ namespace BlazorDate.Client.Services.SeriousnessService
 
         public Seriousness CreateNewSeriousness()
         {
-            var newSeriousness = new Seriousness { IsNew = true, Editing = true };
+            Seriousness newSeriousness = new Seriousness { IsNew = true, Editing = true };
             Seriousnesses.Add(newSeriousness);
             OnChange.Invoke();
             return newSeriousness;

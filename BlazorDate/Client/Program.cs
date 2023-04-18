@@ -1,6 +1,7 @@
 global using BlazorDate.Client.Services.PersonService;
 global using BlazorDate.Client.Services.GenderService;
 global using BlazorDate.Client.Services.PreferenceService;
+global using BlazorDate.Client.Services.SeriousnessService;
 global using BlazorDate.Shared;
 global using BlazorDate.Shared.Models;
 global using System.Net.Http.Json;
@@ -16,6 +17,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IGenderService, GenderService>();
 builder.Services.AddScoped<IPreferenceService, PreferenceService>();
+builder.Services.AddScoped<ISeriousnessService, SeriousnessService>();
 
 
 await builder.Build().RunAsync();

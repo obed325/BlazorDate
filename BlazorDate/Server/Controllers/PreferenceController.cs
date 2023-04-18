@@ -1,7 +1,6 @@
-﻿using BlazorDate.Client.Services.PreferenceService;
+﻿using BlazorDate.Server.Services.PreferenceService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using IPreferenceService = BlazorDate.Server.Services.PreferenceService.IPreferenceService;
 
 namespace BlazorDate.Server.Controllers
 {

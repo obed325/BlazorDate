@@ -3,10 +3,10 @@ global using BlazorDate.Shared.Models;
 global using BlazorDate.Server.Services.PersonService;
 global using BlazorDate.Server.Services.GenderService;
 global using BlazorDate.Server.Services.PreferenceService;
+global using BlazorDate.Server.Services.SeriousnessService;
 global using Microsoft.EntityFrameworkCore;
 global using BlazorDate.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
-//using BlazorDate.Server.Services.PreferenceService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IGenderService, GenderService>();
 builder.Services.AddScoped<IPreferenceService, PreferenceService>();
+builder.Services.AddScoped<ISeriousnessService, SeriousnessService>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -42,7 +42,7 @@ namespace BlazorDate.Client.Services.SeriousnessService
 
         public async Task GetSeriousnesses()
         {
-            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Seriousness>>>("api/Seriousnes");
+            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Seriousness>>>("api/Seriousness");
             if (response != null && response.Data != null)
                 Seriousnesses = response.Data;
         }
